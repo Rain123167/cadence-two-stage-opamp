@@ -1,0 +1,32 @@
+// Educational starting point only. Adapt model names and parameters to your PDK.
+// This is not a PDK-qualified or verified design.
+
+simulator lang=spectre
+global 0
+
+parameters VDD=1.8 VCM=0.9 IB=20u CL=2p CC=1p
+parameters WNIN=10u LNIN=0.6u WNTAIL=8u LNTAIL=1.2u
+parameters WNLOAD=12u LNLOAD=1.2u WN2=40u LN2=0.6u
+parameters WP2=80u LP2=0.6u WNBIAS=8u LBIAS=1.2u
+
+// Replace with the model include and section supplied by your PDK.
+// Example form (keep disabled until corrected for the local PDK):
+// include "<path-to-pdk-model-file.scs>" section=<model-section>
+
+subckt two_stage_opamp inp inm out vdd vss vbias vbiasp
+// First stage: NMOS differential pair with PMOS current-mirror load.
+M1 (n1 inp ntail vss) nch w=WNIN l=LNIN
+M2 (n2 inm ntail vss) nch w=WNIN l=LNIN
+M3 (n1 n1 vdd vdd) pch w=WNLOAD l=LNLOAD
+M4 (n2 n1 vdd vdd) pch w=WNLOAD l=LNLOAD
+M5 (ntail vbias vss vss) nch w=WNTAIL l=LNTAIL
+
+// Second gain stage. Cc is the Miller compensation capacitor.
+M6 (out n2 vss vss) nch w=WN2 l=LN2
+M7 (out vbiasp vdd vdd) pch w=WP2 l=LP2
+Ccomp (n2 out) capacitor c=CC
+Cload (out vss) capacitor c=CL
+ends two_stage_opamp
+
+// Bias helper only: replace with a PDK-appropriate bias network/current source.
+// For early topology exploration this ideal source may be used in a testbench.
