@@ -1,0 +1,19 @@
+// Testbench template. Add the PDK model include and correct model names first.
+simulator lang=spectre
+global 0
+parameters VDD=1.8 VCM=0.9 IB=20u CL=2p CC=1p
+
+VDDsrc (vdd 0) vsource dc=VDD
+VSSsrc (vss 0) vsource dc=0
+VBIASsrc (vbias 0) vsource dc=0.65
+VBIASPsrc (vbiasp 0) vsource dc=1.1
+VINPUT (vin 0) vsource dc=VCM mag=1
+
+// Unity follower connection; for open-loop AC characterization, break the
+// feedback path and use a suitable differential stimulus / loop-gain setup.
+XAMP (vin vfb vout vdd vss vbias vbiasp) two_stage_opamp
+RFB (vout vfb) resistor r=1
+
+// Placeholder analyses. In Virtuoso ADE, configure operating point, AC and
+// transient analyses as described in docs/characterization.md.
+save vin vout vfb
