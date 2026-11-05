@@ -1,0 +1,13 @@
+stage,metric,value,unit,supply_V,load_pF,corner,temperature_C,notes
+schematic,DC gain,,,,,,,
+schematic,GBW,,,,,,,
+schematic,phase margin,,,,,,,
+schematic,positive slew rate,,,,,,,
+schematic,negative slew rate,,,,,,,
+schematic,power,,,,,,,
+post-layout,DC gain,,,,,,,
+post-layout,GBW,,,,,,,
+post-layout,phase margin,,,,,,,
+post-layout,positive slew rate,,,,,,,
+post-layout,negative slew rate,,,,,,,
+post-layout,power,,,,,,,
